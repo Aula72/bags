@@ -1,0 +1,12 @@
+
+{% extends 'dashboard/base.html' %}
+{% block title %}Bags{% endblock %}
+{% block content %}
+{{ request.user }}
+
+<img src="{{ bags.image_one }}">
+Bag Id:{{ bags.id }} Simple Description {{ bags.simple_description }} Shop Name{{ bags.shop }} Price {{ bags.price }} 
+
+
+
+{% endblock %}

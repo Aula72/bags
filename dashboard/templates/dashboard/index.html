@@ -1,0 +1,40 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<h1>These are the available messages</h1>
+{% for message in messages %}
+	<p>{{ message.id }}===={{ message.message }} <a href="#">details</a></p>
+{% endfor %}
+{{ headers }}
+{{ request.user }}
+{% endblock %}
+<form action="{% url 'ugbags:shop-list'%}" method="post">
+	{% csrf_token %}
+	<label for="">name</label><input type="text" name="name" id=""><br>
+	<label for="">contact</label><input type="tel" name="contact" id=""><br>
+
+	<label for="">location</label><input type="text" name="location" id=""><br>
+	<label for="">description</label><textarea name="description" id="" cols="30" rows="10"></textarea>
+	<input type="submit" value="create shop">
+</form>
+<footer>ikto ktore iktoeroe okoere</footer>
+</body>
+</html>
+<style>
+ p{
+ 	color:white;
+ }
+ body{
+ 	background-color:maroon;
+ 	padding-left:10px;
+ 	padding-right:10px;
+ 	padding-top:10px;
+ }
+ h1{
+ 	color:white;
+
+ }
+</style>
+
+

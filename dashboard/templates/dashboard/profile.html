@@ -1,0 +1,13 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Update Profile{% endblock %}
+{% block content %}
+<form action="{% url 'dashboard:profile' %}" method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+	{{ field.name }}{{ field }}
+	{% endfor %}
+	<input type="submit" value="Login" />
+</form>
+{% endblock %}
+
+{% include 'dashboard/includes/footer.html' %}

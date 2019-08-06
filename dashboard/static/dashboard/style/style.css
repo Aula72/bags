@@ -1,0 +1,28 @@
+body{
+    background-color: antiquewhite;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    
+}
+a{ 
+    text-decoration: none;
+    text-decoration-color: brown;
+}
+.btn{
+    text-decoration: none;
+    font-size: 16px;
+    /* color:blue; */
+    display: inline;
+    
+}
+ .del{
+    color:red;
+}
+ .upd{
+    color:green;
+}
+ .det{
+    color:darkblue;
+}

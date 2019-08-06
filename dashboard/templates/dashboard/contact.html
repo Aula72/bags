@@ -1,0 +1,37 @@
+
+{% extends 'dashboard/base.html' %}
+{% block title %}Contact Us{% endblock %}
+<style>
+        .mess{
+            color:tomato;
+            font-size: 50px;
+            display: none;
+        }
+    </style>
+{% block content %}
+<div class="free-space"></div>
+<div class='form-container'>
+<form action="{% url 'dashboard:contact'%}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="row">
+        <div class="col-25">{{ field.name }}</div>
+        <div class="col-75">{{ field }}</div>
+    </div>   
+        
+    {% endfor %}
+   
+    <input type="submit" value="Submit">
+</form>
+</div>
+<div class="free-space">
+    
+</div>
+{% endblock %}
+
+<style>
+    .free-space{
+        background-color: black;
+
+    }
+</style>

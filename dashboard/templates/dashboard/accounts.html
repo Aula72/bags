@@ -1,0 +1,7 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Account of Users{% endblock %}
+{% block content %}
+    {% for account in accounts %}
+        {{ account.id }}<br>
+    {% endfor %}
+{% endblock %}

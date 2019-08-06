@@ -1,0 +1,12 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Bags{% endblock %}
+{% block content %}
+{{ request.user }}
+{% for bag in bags %}
+<p><img src="{{ bag.image_one }}">
+{{ bag.simple_description }}{{ bag.payment_type }}
+<a href="{% url 'dashboard:bag-details' pk=bag.id %}">Details</a>
+<p>
+{% endfor %}
+
+{% endblock %}

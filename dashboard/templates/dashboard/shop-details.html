@@ -1,0 +1,8 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Shop Details{% endblock %}
+{% block content %}
+{{ shops.name }}<br>{{ shops.location }}<br>{{ shops.contact }}<br>{{shops.description }}
+{% for shop in shops.bag %}
+	<p><a href="{{ shop }}">Shop</a></p>
+{% endfor %}
+{% endblock %}
