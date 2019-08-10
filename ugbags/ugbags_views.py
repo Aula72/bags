@@ -2,7 +2,8 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login as login_to_django, logout as logout_to_django
 
-from rest_framework import status, generics, permissions, renderers
+from rest_framework import (status, generics, permissions, 
+							renderers, exceptions, authentication)
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import (api_view, action, permission_classes, 
@@ -311,7 +312,8 @@ class LoginView(APIView):
 		user_object = serializer.validated_data['user']
 		login_to_django(request, user_object)
 		#get user's token or create if not availabe	
-		token, created =  Token.objects.get_or_create(user=user_object)		
+		token, created =  Token.objects.get_or_create(user=user_object)	
+		# request.META.get('WWW-Authentication', 'Token '+str(token))	
 		return Response({'token':token.key},status=200)
 
 
