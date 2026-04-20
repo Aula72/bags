@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 'allauth.account',
     # 'rest_auth.registration',
     'corsheaders',
+    'drf_yasg',  # Swagger/OpenAPI documentation
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

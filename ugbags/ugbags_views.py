@@ -24,6 +24,12 @@ from ugbags.permissions import IsOwnerOrReadOnly
 #api url root
 @api_view(['GET'])
 def api_root(request, format=None):
+	"""
+	Ugbags API Root Endpoint
+	
+	Returns all available API endpoints with their URLs.
+	This is the main entry point for discovering all API resources.
+	"""
 	return Response({
 		'bags':reverse('ugbags:bag-lists', request=request, format=format),
 		'shops':reverse('ugbags:shop-list', request=request, format=format),
@@ -39,7 +45,16 @@ class CsrfExceptSessionAuthentication(SessionAuthentication):
 	def enforce_csrf(self, request):
 		return
 
-class BagList(APIView):	
+class BagList(APIView):
+	"""
+	API endpoint for managing bags.
+	
+	get:
+	Return a list of all bags in the marketplace.
+	
+	post:
+	Create a new bag listing (authentication required).
+	"""
 	permission_classes = (IsAuthenticatedOrReadOnly, )
 	def get(self, request, format=None):			
 		bags = Bag.objects.all()
@@ -56,6 +71,18 @@ class BagList(APIView):
 		serializer.save(self.request.user)
 
 class BagDetails(APIView):
+	"""
+	API endpoint for individual bag operations.
+	
+	get:
+	Retrieve details of a specific bag.
+	
+	put:
+	Update a bag listing (owner only).
+	
+	delete:
+	Delete a bag listing (owner only).
+	"""
 	def get_object(self, pk):
 		try:
 			return Bag.objects.get(pk=pk)
@@ -81,6 +108,14 @@ class BagDetails(APIView):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class UserList(APIView):
+	"""User management endpoint.
+	
+	get:
+	Retrieve a list of all registered users.
+	
+	post:
+	Register a new user account. Returns user details and authentication token.
+	"""
 	def get(self, request, format=None):
 		users = User.objects.all()
 		serializer = UserSerializer(users, many=True, context={'request': request})
@@ -99,6 +134,17 @@ class UserList(APIView):
 		return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetail(APIView):
+	"""Individual user operations.
+	
+	get:
+	Retrieve details of a specific user.
+	
+	put:
+	Update user information.
+	
+	delete:
+	Delete a user account.
+	"""
 	def get_object(self, pk):
 		try:
 			return User.objects.get(pk=pk)
@@ -124,6 +170,14 @@ class UserDetail(APIView):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ShopList(APIView):
+	"""Shop management endpoint.
+	
+	get:
+	Retrieve a list of all shops in the marketplace.
+	
+	post:
+	Create a new shop (authentication required).
+	"""
 	permission_classes = (IsAuthenticatedOrReadOnly,)
 	#permission_classes =(IsOwnerOrReadOnly,)
 	def perform_create(self, serializer):
@@ -145,6 +199,17 @@ class ShopList(APIView):
 		serializer.save(self.request.user)
 
 class ShopDetail(APIView):
+	"""Individual shop operations.
+	
+	get:
+	Retrieve details of a specific shop.
+	
+	put:
+	Update shop information (owner only).
+	
+	delete:
+	Delete a shop (owner only).
+	"""
 	permission_classes =(IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly,)
 	def get_object(self, pk):
 		try:
@@ -171,6 +236,14 @@ class ShopDetail(APIView):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ProfileList(APIView):
+	"""User profile management.
+	
+	get:
+	Retrieve all user profiles.
+	
+	post:
+	Create or update user profile information.
+	"""
 	permission_classes = (IsAuthenticatedOrReadOnly,)
 	def get(self, request, format=None):
 		profile=Profile.objects.all()
@@ -223,6 +296,14 @@ class ProfileDetail(APIView):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ContactList(APIView):
+	"""Contact message management.
+	
+	get:
+	Retrieve all contact messages.
+	
+	post:
+	Submit a new contact message or inquiry.
+	"""
 	authentication_classes = (CsrfExceptSessionAuthentication,)
 	def get(self, request, format=None):
 		contacts = Contact.objects.all()
@@ -237,6 +318,14 @@ class ContactList(APIView):
 		return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 class AccountList(APIView):
+	"""Financial account transactions.
+	
+	get:
+	Retrieve all financial transactions.
+	
+	post:
+	Create a new transaction (deposit or withdrawal).
+	"""
 	permission_classes = (IsAuthenticatedOrReadOnly, )
 	def get(self, request, format=None):			
 		accounts = Account.objects.all()
@@ -253,6 +342,17 @@ class AccountList(APIView):
 		serializer.save(self.request.user)
 
 class AccountDetails(APIView):
+	"""Individual transaction operations.
+	
+	get:
+	Retrieve details of a specific transaction.
+	
+	put:
+	Update transaction details.
+	
+	delete:
+	Delete a transaction record.
+	"""
 	def get_object(self, pk):
 		try:
 			return Account.objects.get(pk=pk)
@@ -304,6 +404,19 @@ class ContactDetail(APIView):
 		return Response(status=status.HTTP_204_NO_CONTENT)
 
 class LoginView(APIView):
+	"""User authentication endpoint.
+	
+	post:
+	Authenticate user with username and password.
+	Returns authentication token on success.
+	
+	Request body:
+	- username: User's username
+	- password: User's password
+	
+	Response:
+	- token: Authentication token for subsequent requests
+	"""
 	authentication_classes = (CsrfExceptSessionAuthentication, BasicAuthentication,)
 	def post(self, request):
 		serializer = LoginSerializer(data=request.data)
@@ -318,6 +431,12 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
+	"""User logout endpoint.
+	
+	post:
+	Log out the current user and invalidate their session.
+	Requires authentication token.
+	"""
 	authentication_classes  = (TokenAuthentication, )
 	@csrf_exempt
 	def post(self, request):
@@ -325,6 +444,13 @@ class LogoutView(APIView):
 		return Response(status=204)
 @api_view(['GET'])
 def now_search(request):
+	"""Search endpoint for bags, shops, and users.
+	
+	Query parameter:
+	- q: Search query string
+	
+	Returns matching bags, shops, and users.
+	"""
 	query = request.GET.get("q")
 	shops = Shop.objects.all()
 	bags = Bag.objects.all()
