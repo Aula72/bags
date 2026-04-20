@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 GENGER = (('m','male'), ('f','female'))
 TYPES = (('b','buyer'),('s','seller'), ('a','admin'))
 BAGTYPE = (('a', 'office'), ('b', 'laptop'), ('c', 'lady_hand_bag'), ('d','school'),('e','travel'), ('f',"men's wallet"), ('g',"women's wallet"))

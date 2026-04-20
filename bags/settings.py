@@ -161,6 +161,9 @@ MEDIA_URL = '/'
 PHONENUMBER_DEFAULT_REGION = 'UG'
 SITE_ID = 1
 
+# Default primary key field type for Django 3.2+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES':(

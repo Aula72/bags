@@ -1,6 +1,5 @@
-from django.shortcuts import render, reverse, render_to_response
+from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 from dashboard.forms import (ContactForm, ShopForm, BagForm, AccountForm,
 RegisterForm, LoginForm, ProfileForm)
 import requests, json
@@ -214,7 +213,7 @@ def logout(request):
 	log_out = requests.post(base_url+'logout/')	
 	if log_out.status_code==204:
 		session.headers.clear()
-		response = render_to_response('dashboard/index.html',{},RequestContext(request))
+		response = render(request, 'dashboard/index.html', {})
 		response.delete_cookie('user_logged')
 		return response
 	return HttpResponseRedirect(reverse('dashboard:index'))

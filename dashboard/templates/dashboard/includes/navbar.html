@@ -1,227 +1,92 @@
-<div class="topnav">
-        <!-- <a href="#default" class="logo">CompanyLogo</a> -->
-        <a href="{% url 'dashboard:index' %}">Home</a>
-        <a href="{% url 'dashboard:accounts' %}">Accounts</a>        
-        <a href="{% url 'dashboard:shops' %}">Shops</a>
-        <a href="{% url 'dashboard:bags' %}">Bags</a>
-        <a href="{% url 'dashboard:contact' %}">Contact</a>
-        
-        
-        <!-- <div >
-            <form action="{% url 'dashboard:login' %}" class="form-inline" method="post">
-                {% csrf_token %}
-                <input type="text" placeholder="Username" name="username">
-                <input type="password" placeholder="Password" name="password">
-                <button type="submit">Login</button>
-            </form>
-            
-            
-        </div> -->
-        <div class="always-left">
-        {% if request.user.id is None %}
-            
-            <a href="{% url 'dashboard:register' %}">Register</a>
-            <a href="{% url 'dashboard:login' %}">Login</a>
-        {% else %}  
-            <a href="{% url 'dashboard:logout' %}">Logout</a>
-        {% endif %}
-        
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.1);">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'dashboard:index' %}" style="color: #6366f1; font-size: 24px;">
+            <i class="bi bi-bag-check-fill me-2"></i>Ugbags
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="border-color: #6366f1;">
+            <span class="navbar-toggler-icon" style="filter: invert(1) hue-rotate(180deg);"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:index' %}" style="color: #374151; font-weight: 500;">
+                        <i class="bi bi-house-fill me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:accounts' %}" style="color: #374151; font-weight: 500;">
+                        <i class="bi bi-wallet2 me-1"></i>Accounts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:shops' %}" style="color: #374151; font-weight: 500;">
+                        <i class="bi bi-shop me-1"></i>Shops
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:bags' %}" style="color: #374151; font-weight: 500;">
+                        <i class="bi bi-bag-fill me-1"></i>Bags
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:contact' %}" style="color: #374151; font-weight: 500;">
+                        <i class="bi bi-envelope-fill me-1"></i>Contact
+                    </a>
+                </li>
+                
+                {% if request.user.id is None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard:register' %}" style="color: #374151; font-weight: 500;">
+                            <i class="bi bi-person-plus-fill me-1"></i>Register
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="{% url 'dashboard:login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="color: #374151; font-weight: 500;">
+                            <i class="bi bi-person-circle me-1"></i>{{ request.user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <li><a class="dropdown-item" href="{% url 'dashboard:profile' %}"><i class="bi bi-person-fill me-2"></i>Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'dashboard:logout' %}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-
     </div>
+</nav>
 
-    <style>
-        .btn{
-    text-decoration: none;
-    font-size: 16px;
-    /* color:blue; */
-    display: inline;
+<style>
+    .nav-link {
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        padding: 8px 16px !important;
+        margin: 0 4px;
+    }
     
-}
- .del{
-    color:red;
-}
- .upd{
-    color:green;
-}
- .det{
-    color:darkblue;
-}
-/* mess class for textarea in contact for */
-.mess{
-        color:tomato;
-        font-size: 16px;
-}
-.input-item{
-    width: 100%;
-    height: 35px;
-    border-radius: 4px;
-    font-size: 17px;
-    display: inline-block;
-}
-label #id_message{
-    color:green;
-}
-* {box-sizing: border-box;}
-/* style the navbar*/
-.topnav{
-    overflow: hidden;
-    background-color:#e9e9e9;    
-}
-/* Navbar links */
-.topnav a{
-    float: left;
-    display: block;
-    color: black;
-    text-align: center;
-    padding:  14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-/* Navbar links on mouse-over */
-.topnav a:hover{
-    background-color: #ddd;
-    color:blue;    
-}
-
-/* active or current link */
-.topnav a.active{
-    background-color:#2196f3;
-    color:white;
-}
-/* style the container */
-.topnav .login-container .always-left{
-    float:right;
-}
-/* style the input field inside the navbar */
-.topnav input[type=text], input[type=password]{
-    padding: 6px;
-    margin-top:8px;
-    font-size: 17px;
-    border:none;
-    width: 150px; /*adjust to avoid break*/
-}
-/* style the button inside the input container */
-.topnav .login-container button{
-    display: flex;
-    float: right;
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    background: blue;
-    font-size: 17px;
-    border:none;
-    cursor:pointer;
-}
-
-.topnav .login-container button:hover{
-    background:#ccc;
-}
-/* login form */
-.form-inline{
-    /*display: flex;*/
-    flex: 0.4;
-    flex-flow: row wrap;
-    align-items: center;
-}
-.form-inline label{
-    margin: 5px 10px 5px 0;
-}
-.form-inline input {
-  vertical-align: middle;
-  margin: 5px 10px 5px 0;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-.always-left{
-    float:right;
-}
-/* Style the submit button */
-.form-inline button {
-  padding: 10px 20px;
-  background-color: dodgerblue;
-  border: 1px solid #ddd;
-  color: white;
-}
-
-.form-inline button:hover {
-  background-color: royalblue;
-}
-
-/* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-@media (max-width: 800px) {
-  .form-inline input {
-    margin: 10px 0;
-  }
-
-  .form-inline {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-/* input styling */
-input[type=text], textarea, input[type=email]{
-    width:100px;
-    padding: 12px;
-    border:1px solid #ccc;
-    border-radius:4px;
-    resize: vertical;
-}
-label{
-    padding: 12px;
-    display: inline-block;
-}
-input[type=submit]{
-    background-color:#2196f3;
-    color:#fff;
-    padding:12px 20px;
-    border:none;
-    border-radius:4px;
-    cursor: pointer;
-    float:right;
-}
-input[type=submit]:hover{
-    background-color: #454545;
-}
-.form-container{
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding:20px;
-    width:100%;
-}
-.col-25{
-    float: left;
-    width: 25%;
-    margin-top: 6px;
-    text-transform: capitalize;
-}
-.col-75{
-    float: left;
-    width:75%;
-    margin-top: 6px;
-}
-label[for='id_message'],label[for='id_name'],label[for='id_email'],label[for='id_subject']{
-    float: left;
-    width: 25%;
-    margin-top: 6px;
-}
-/* response navbar */
-@media screen and (max-width:600px){
-    .topnav .login-container{
-        float:none;
+    .nav-link:hover {
+        background-color: rgba(99, 102, 241, 0.1);
+        color: #6366f1 !important;
     }
-    .topnav a, .topnav input[type=text], .topnav .login-container button{
-        float:none;
-        display: block;
-        text-align: left;
-        width:100%;
-        margin:0;
-        padding:14px;
+    
+    .navbar-brand:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
     }
-    .topnav input[type=text]{
-        border:1px solid #ccc;
+    
+    .dropdown-item {
+        padding: 10px 20px;
+        transition: all 0.3s ease;
     }
-}
-
+    
+    .dropdown-item:hover {
+        background-color: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+    }
 </style>

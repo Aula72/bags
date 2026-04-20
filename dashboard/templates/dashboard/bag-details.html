@@ -1,12 +1,110 @@
-
 {% extends 'dashboard/base.html' %}
-{% block title %}Bags{% endblock %}
+{% block title %}Bag Details{% endblock %}
+
 {% block content %}
-{{ request.user }}
+<div class="row">
+    <div class="col-12 mb-3">
+        <a href="{% url 'dashboard:bags' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Bags
+        </a>
+    </div>
+</div>
 
-<img src="{{ bags.image_one }}">
-Bag Id:{{ bags.id }} Simple Description {{ bags.simple_description }} Shop Name{{ bags.shop }} Price {{ bags.price }} 
-
-
-
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            {% if bags.image_one %}
+            <img src="{{ bags.image_one }}" class="card-img-top" alt="Bag image" style="height: 400px; object-fit: cover;">
+            {% else %}
+            <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <i class="bi bi-bag-fill text-white" style="font-size: 128px;"></i>
+            </div>
+            {% endif %}
+            
+            {% if bags.image_two or bags.image_three or bags.image_four %}
+            <div class="card-body">
+                <div class="row g-2">
+                    {% if bags.image_two %}
+                    <div class="col-4">
+                        <img src="{{ bags.image_two }}" class="img-thumbnail" alt="Bag image 2" style="height: 100px; width: 100%; object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    {% if bags.image_three %}
+                    <div class="col-4">
+                        <img src="{{ bags.image_three }}" class="img-thumbnail" alt="Bag image 3" style="height: 100px; width: 100%; object-fit: cover;">
+                    </div>
+                    {% endif %}
+                    {% if bags.image_four %}
+                    <div class="col-4">
+                        <img src="{{ bags.image_four }}" class="img-thumbnail" alt="Bag image 4" style="height: 100px; width: 100%; object-fit: cover;">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="fw-bold mb-0">{{ bags.bag_type }}</h2>
+                    <span class="badge bg-primary" style="font-size: 16px;">{{ bags.bag_size }}</span>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="text-primary fw-bold">{{ bags.price|default:"0" }} UGX</h3>
+                </div>
+                
+                <div class="mb-4">
+                    <h5 class="fw-semibold mb-3"><i class="bi bi-info-circle me-2"></i>Description</h5>
+                    <p class="text-muted">{{ bags.simple_description }}</p>
+                </div>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <small class="text-muted d-block mb-1">Shop</small>
+                            <strong>{{ bags.shop }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <small class="text-muted d-block mb-1">Bag ID</small>
+                            <strong class="small">{{ bags.id }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <small class="text-muted d-block mb-1">Skin Type</small>
+                            <strong>{{ bags.skin_type }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <small class="text-muted d-block mb-1">Color</small>
+                            <strong>{{ bags.bag_color }}</strong>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="border rounded p-3">
+                            <small class="text-muted d-block mb-1">Payment Type</small>
+                            <strong>{{ bags.payment_type }}</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-lg">
+                        <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                    </button>
+                    <button class="btn btn-outline-success">
+                        <i class="bi bi-chat-dots me-2"></i>Contact Seller
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
